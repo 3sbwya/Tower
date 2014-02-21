@@ -1,26 +1,40 @@
 package Hanoi;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Scanner;
 import java.util.Stack;
 
 public class Tower {
-	Stack<Integer> first = new Stack<>();
-	Stack<Integer> second = new Stack<>();
-	Stack<Integer> third = new Stack<>();
+	private Stack<Integer> first = new Stack<>();
+	private Stack<Integer> second = new Stack<>();
+	private Stack<Integer> third = new Stack<>();
 	private int numOfDisks, moves = 0;
 	
 	public Tower(int numOfDisks) {
 		this.numOfDisks = numOfDisks;
 	}
-
+	
+	public Tower(){
+		this(0);
+	}
+	
+	public void setDisks(int n){
+		this.numOfDisks = n;
+	}
+	
 	public void play(){
 		buildTower();
 		System.out.println(toString());
 		solve(numOfDisks, first, third, second);
-		System.out.println("Moves: " + moves);
+		System.out.println("Moves: " + moves + "\n");
 	}
 	
 	private void buildTower(){
+		first.clear();
+		second.clear();
+		third.clear();
+		moves = 0;
 		for(int i = numOfDisks; i > 0; i--){
 			first.push(i);
 		}
@@ -30,10 +44,15 @@ public class Tower {
 		if(n >= 1){
 			solve(n-1, source, aux, dest);
 			dest.push(source.pop());
+			moves++;
 			System.out.println(toString());
 			solve(n-1, aux, dest, source);
-			moves++;
+			
 		}
+	}
+	
+	public String moves(){
+		return numOfDisks + " disk(s) has " + moves + " moves.\n";
 	}
 
 	@Override
@@ -42,21 +61,21 @@ public class Tower {
 				+ third + "\n";
 	}
 	
-	public static void main(String[] args){
-		int numOfDisks = 1;
+	public static void main(String[] args) throws IOException{
+		int[] disks = {1,2,3,4,5,6,7,8};
 		boolean check = false;
+		
+		System.out.println("Filename to save moves:");
 		Scanner k = new Scanner(System.in);
-		while(!check){
-			System.out.print("Number of disks (1-8): ");
-			numOfDisks = k.nextInt();
-			if(numOfDisks > 8 || numOfDisks < 1){
-				System.err.println("Number must be between 1 and 8");
-			}else{
-				check = true;
-			}
+		String filename = k.nextLine();
+		PrintWriter outputFile = new PrintWriter(filename);
+		Tower t = new Tower();
+		for(int i = 0; i < disks.length; i++){
+			t.setDisks(disks[i]);
+			t.play();
+			outputFile.println(t.moves());
 		}
-		Tower t = new Tower(numOfDisks);
-		t.play();
+		outputFile.close();
 	}
 		
 }
