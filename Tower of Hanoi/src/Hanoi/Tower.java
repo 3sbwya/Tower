@@ -2,11 +2,7 @@ package Hanoi;
 
 import java.util.Scanner;
 import java.util.Stack;
-/**
- * Nothing is happening
- * @author Matt
- *
- */
+
 public class Tower {
 	Stack<Integer> first = new Stack<>();
 	Stack<Integer> second = new Stack<>();
