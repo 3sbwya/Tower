@@ -2,7 +2,11 @@ package Hanoi;
 
 import java.util.Scanner;
 import java.util.Stack;
-
+/**
+ * This is gonna be used for commits
+ * @author Matt
+ *
+ */
 public class Tower {
 	Stack<Integer> first = new Stack<>();
 	Stack<Integer> second = new Stack<>();
